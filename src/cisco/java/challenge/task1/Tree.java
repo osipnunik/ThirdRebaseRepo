@@ -1,13 +1,24 @@
 package cisco.java.challenge.task1;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Tree {
-
+	
 	private static List<String> pathes;
 	private static String parent = "";
+	
+	public ArrayList<GNode> walkGraph(GNode node, ArrayList<GNode> list){
+		if(!list.contains(node))list.add(node);
+		//list.addAll(Arrays.asList(node.getChildren()));
+		GNode[] nodes = node.getChildren();
+		for (int i = 0; i < nodes.length; i++) {
+			walkGraph(nodes[i], list);
+		}
+		return list;
+	}
 	
 	public List<String> paths(GNodeImpl node) {
 		pathes = new ArrayList<String>();
@@ -15,16 +26,16 @@ public class Tree {
 		return pathes;
 	}
 	
-	public StringBuilder walkGraph(GNode GNode, StringBuilder path) {
-		path.append(GNode.getName());
+	public StringBuilder walkGraph(GNode node, StringBuilder path) {
+		path.append(node.getName());
 		parent = path.toString();
-		if(!GNode.hasChild()) {
+		if(!node.hasChild()) {
 			pathes.add(path.toString());
 			parent = path.toString().substring(0, path.length()-1);
 			return null;
 				}else {
-					for(GNode node : ((GNodeImpl) GNode).getList()) {
-						walkGraph(node,  new StringBuilder(parent));
+					for(GNode nodeEl : ((GNodeImpl) node).getList()) {
+						walkGraph(nodeEl,  new StringBuilder(parent));
 					}
 					parent = path.toString().substring(0, path.length()-1);
 				}
@@ -69,5 +80,18 @@ public class Tree {
 			return arr;
 		}
 
+		@Override
+		public String toString() {
+			
+			return this.name + " ";
+		}
+		
+		
+
+	}
+
+	public List walkGraph(GNodeImpl node) {
+		ArrayList<GNode> list = new ArrayList<>();
+		return walkGraph(node, list);
 	}
 }

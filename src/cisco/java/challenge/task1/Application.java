@@ -1,5 +1,7 @@
 package cisco.java.challenge.task1;
 
+import java.util.ArrayList;
+
 import cisco.java.challenge.task1.Tree;
 import cisco.java.challenge.task1.Tree.GNodeImpl;
 public class Application {
@@ -17,6 +19,8 @@ public class Application {
 		GNodeImpl nodeH = tree.new GNodeImpl("H");
 		GNodeImpl nodeI = tree.new GNodeImpl("I");
 		
+		
+		
 		nodeA.addChild(nodeB);
 		nodeA.addChild(nodeC);
 		nodeA.addChild(nodeD);
@@ -26,7 +30,10 @@ public class Application {
 		nodeC.addChild(nodeH);
 		nodeC.addChild(nodeI);
 		
-		System.out.println(tree.paths(nodeA).toString());
+		
+		System.out.println("all nodes of A node : " + tree.walkGraph(nodeA).toString());
+		
+		System.out.println("paths(A) = " + tree.paths(nodeA).toString());
 	}
 
 }
