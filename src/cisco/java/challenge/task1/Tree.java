@@ -6,46 +6,51 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Tree {
-	
+
 	private static List<String> pathes;
 	private static String parent = "";
-	
-	public ArrayList<GNode> walkGraph(GNode node, ArrayList<GNode> list){
-		if(!list.contains(node))list.add(node);
-		//list.addAll(Arrays.asList(node.getChildren()));
+
+	public ArrayList<GNode> walkGraph(GNode node, ArrayList<GNode> list) {
+		if (!list.contains(node))
+			list.add(node);
 		GNode[] nodes = node.getChildren();
 		for (int i = 0; i < nodes.length; i++) {
 			walkGraph(nodes[i], list);
 		}
 		return list;
 	}
-	
+
 	public List<String> paths(GNodeImpl node) {
 		pathes = new ArrayList<String>();
 		walkGraph(node, new StringBuilder(""));
 		return pathes;
 	}
-	
-	public StringBuilder walkGraph(GNode node, StringBuilder path) {
+
+	private StringBuilder walkGraph(GNode node, StringBuilder path) {
 		path.append(node.getName());
 		parent = path.toString();
-		if(!node.hasChild()) {
+		if (!node.hasChild()) {
 			pathes.add(path.toString());
-			parent = path.toString().substring(0, path.length()-1);
+			parent = path.toString().substring(0, path.length() - 1);
 			return null;
-				}else {
-					for(GNode nodeEl : ((GNodeImpl) node).getList()) {
-						walkGraph(nodeEl,  new StringBuilder(parent));
-					}
-					parent = path.toString().substring(0, path.length()-1);
-				}
+		} else {
+			for (GNode nodeEl : ((GNodeImpl) node).getList()) {
+				walkGraph(nodeEl, new StringBuilder(parent));
+			}
+			parent = path.toString().substring(0, path.length() - 1);
+		}
 		return null;
 	}
+	
+	public List<GNode> walkGraph(GNodeImpl node) {
+		ArrayList<GNode> list = new ArrayList<>();
+		return walkGraph(node, list);
+	}
 
-	 class GNodeImpl implements GNode {
-		private String name;
-		List<GNode> list;
-					
+	class GNodeImpl implements GNode {
+		private final String name;
+		private List<GNode> list;
+
 		public GNodeImpl(String name) {
 			super();
 			this.name = name;
@@ -55,11 +60,11 @@ public class Tree {
 		public void addChild(GNodeImpl node) {
 			list.add(node);
 		}
-		
+
 		public List<GNode> getList() {
 			return list;
 		}
-		
+
 		public void setList(List<GNode> list) {
 			this.list = list;
 		}
@@ -70,7 +75,7 @@ public class Tree {
 		}
 
 		public boolean hasChild() {
-			return list.size()>0;
+			return list.size() > 0;
 		}
 
 		@Override
@@ -82,16 +87,9 @@ public class Tree {
 
 		@Override
 		public String toString() {
-			
 			return this.name + " ";
 		}
-		
-		
 
 	}
-
-	public List walkGraph(GNodeImpl node) {
-		ArrayList<GNode> list = new ArrayList<>();
-		return walkGraph(node, list);
-	}
+	
 }
