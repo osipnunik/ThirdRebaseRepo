@@ -26,20 +26,18 @@ public class Tree {
 		return pathes;
 	}
 
-	private StringBuilder walkGraph(GNode node, StringBuilder path) {
+	private void walkGraph(GNode node, StringBuilder path) {
 		path.append(node.getName());
 		parent = path.toString();
 		if (!node.hasChild()) {
 			pathes.add(path.toString());
 			parent = path.toString().substring(0, path.length() - 1);
-			return null;
 		} else {
 			for (GNode nodeEl : ((GNodeImpl) node).getList()) {
 				walkGraph(nodeEl, new StringBuilder(parent));
 			}
 			parent = path.toString().substring(0, path.length() - 1);
 		}
-		return null;
 	}
 	
 	public List<GNode> walkGraph(GNodeImpl node) {
