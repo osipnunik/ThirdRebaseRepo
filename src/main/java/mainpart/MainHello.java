@@ -1,7 +1,14 @@
 package mainpart;
 
-public class MainHello {
-    public static void main(String[] args) {
-        System.out.println("Main hello     ");
+public class MainHello{
+    private static MainHello mainhello=null;
+
+    public MainHello() {
+    }
+
+    public static  MainHello getInstance(){
+        if(mainhello==null)
+            mainhello=new MainHello();
+        return mainhello;
     }
 }
